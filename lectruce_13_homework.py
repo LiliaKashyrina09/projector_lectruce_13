@@ -75,3 +75,51 @@ except ValueError as e:
     print(e)  
 
 
+#Task 4
+class Robot:
+    def __init__(self, orientation='up', position_x=0, position_y=0):
+        self.orientation = orientation
+        self.position_x = position_x
+        self.position_y = position_y
+
+    def move(self, steps):
+        if self.orientation == 'up':
+            self.position_y += steps
+        elif self.orientation == 'down':
+            self.position_y -= steps
+        elif self.orientation == 'left':
+            self.position_x -= steps
+        elif self.orientation == 'right':
+            self.position_x += steps
+
+    def turn(self, direction):
+        next_right = {'up': 'right', 'right': 'down', 'down': 'left', 'left': 'up'}
+        next_left = {'up': 'left', 'left': 'down', 'down': 'right', 'right': 'up'}
+        
+        if direction == 'right':
+            self.orientation = next_right[self.orientation]
+        elif direction == 'left':
+            self.orientation = next_left[self.orientation]
+
+    def display_position(self):
+        print(f"Position: ({self.position_x}, {self.position_y})")
+        print(f"Orientation: {self.orientation}")
+
+try:
+    robot1 = Robot()
+    robot1.move(5)
+    assert (robot1.position_x, robot1.position_y) == (0, 5)
+    print("Test 1 Passed: Correct movement.")
+except AssertionError:
+    print(f'Test 1 Failed: Robot should be at position {robot1.position_x, robot1.position_y} after moving.')
+
+try:
+    robot2 = Robot()
+    robot2.turn('right')
+    robot2.move(3)
+    assert robot2.orientation == 'right'
+    assert (robot2.position_x, robot2.position_y) == (3, 1)
+    print("Test 2 Passed: Correct turn and movement.")
+except AssertionError:
+    print(f'Test 2 Failed: Robot should be at position {robot2.position_x, robot2.position_y} after moving {robot2.orientation}.')
+
